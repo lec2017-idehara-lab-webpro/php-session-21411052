@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +9,8 @@
   </head>
   <body>
     <a href='login.php'>Login</a></br>
-    <a href='home.php'>Home</a></br><hr />
+    <a href='home.php'>Home</a></br>
+    <a href='list.php'>List</a></br><hr />
 
     <h1>ユーザのホーム画面</h1>
 
@@ -18,18 +22,25 @@ $login['1001'] = array(
 $login['1002'] = array('name'=>'HIJIRI Hanako', 'pass'=>'pass02');
 $login['1003'] = array('name'=>'NAGAYAMA Jiro', 'pass'=>'pass03');
 
+var_dump($login);
+
 if(isset($_POST['id'],$_POST['pass']) && strlen($_POST['id'])>0 )
 {
   $id = $_POST['id'];
   $pass = $_POST['pass'];
   if(isset($login[$id]) && $login[$id]['pass'] == $pass)
+  {
     print('Welcome');
+    $_SESSION['id'] = $id;
+    $_SESSION['name'] = $login[$id]['name'];
+    var_dump($_SESSION);
+  }
   else {
     print('Wrong Password');
   }
 }
 
-$name = ''; // ここ書き換え
+$name = $_SESSION['name'];
 print('<hr />');
 print($name . "さんでログイン中");
 
